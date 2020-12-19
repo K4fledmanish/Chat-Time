@@ -19,7 +19,7 @@ io.on('connection', (_socket) => {
 });
 
 http.listen(3000, () => {
-  console.log('listening on *:3000');
+  console.log('A user is connected...listening on *:3000');
 });
 
 
