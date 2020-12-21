@@ -22,7 +22,7 @@ export default function HomeScreen() {
 
 // USING useEFFECT hook
   useEffect(() => {
-    socket.current = io("http://172.20.10.2:3001") 
+    socket.current = io("http://10.0.0.1:3001") 
     socket.current.on("message", message => {
       setRecvMessages(prevState => GiftedChat.append(prevState, message));
     });
@@ -40,8 +40,7 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {hasJoined ? (
-        <GiftedChat
+              <GiftedChat
           renderUsernameOnMessage
           messages={recvMessages}
           onSend={messages => onSend(messages)}
@@ -49,9 +48,7 @@ export default function HomeScreen() {
             _id: 1
           }}
         />
-      ) : (
-        <JoinScreen joinChat={joinChat} />
-      )}
+  
       {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />}
     </View>
   );
