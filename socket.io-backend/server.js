@@ -1,37 +1,23 @@
 const io = require("socket.io")();
+const messageHandler = require("./handlers/message.handler");
 
 let currentUserId = 2;
-let currentMessageId = 1;
-const userIds = {};
+const users = {};
 
-function createMessage(userId, messageText) {
-
-  return{
-    _id: currentMessageId++,
-    text: messageText,
-    createdAt: new Date(),
-    user: {
-      _id: userId,
-      name: "Test User",
-      avatar: "https://placeimg.com/140/140/any"
-    }
-  }
-  
+function createUserAvatarUrl() {
+  const rand1 = Math.round(Math.random() * 200 + 100);
+  const rand2 = Math.round(Math.random() * 200 + 100);
+  return `https://placeimg.com/${rand1}/${rand2}/any`;
 }
-
-
 
 io.on("connection", socket => {
   console.log("a user connected!");
   console.log(socket.id);
-  userIds[socket.id] = currentUserId++;
-
-  socket.on("message", messageText => {
-    const userId = userIds[socket.id];
-    const message = createMessage(userId, messageText);
-    console.log(message);
-    //io.emit("message", message);
-    socket.broadcast.emit("message", message);
+  users[socket.id] = { userId: currentUserId++ };
+  socket.on("join", username => {
+    users[socket.id].username = username;
+    users[socket.id].avatar = createUserAvatarUrl();
+    messageHandler.handleMessage(socket, users);
   });
 });
 
