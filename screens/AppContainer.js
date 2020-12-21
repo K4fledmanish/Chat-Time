@@ -1,7 +1,7 @@
-import { createAppContainer, createSwitchNavigator } from '@react-navigation/native';
-import { createStackNavigator } from  '@react-navigation/stack';
-import HomeScreen from "./screens/HomeScreen";
-import JoinScreen from "./screens/JoinScreen";
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from  'react-navigation-stack';
+import HomeScreen from "./HomeScreen";
+import JoinScreen from "./JoinScreen";
 
 const AppStack = createStackNavigator({Home: HomeScreen});
 
