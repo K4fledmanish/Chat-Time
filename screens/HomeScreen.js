@@ -26,6 +26,7 @@ export default function HomeScreen() {
 
   const sendMessage = () => {
     socket.current.emit("message", messageToSend);
+    setMessageToSend("");
 
   }
 
