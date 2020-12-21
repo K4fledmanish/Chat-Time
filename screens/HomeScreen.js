@@ -18,7 +18,7 @@ export default function HomeScreen() {
 
 // USING useEFFECT hook
   useEffect(() => {
-    socket.current = io("http://10.0.0.1:3000")
+    socket.current = io("http://172.20.10.2:3000")
     
   },[]);
 
