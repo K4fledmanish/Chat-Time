@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React,  { useEffect , useState , useRef } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView  } from 'react-native';
 //import { useEffect } from 'react';
 import io from "socket.io-client";
+import { GiftedChat } from 'react-native-gifted-chat'
+
 
 //io = require('socket.io-client/socket.io');
 //window.navigator.userAgent = 'react-native';
@@ -21,37 +23,28 @@ export default function HomeScreen() {
   useEffect(() => {
     socket.current = io("http://172.20.10.2:3001")
     socket.current.on("message", message => {
-      setRecvMessages(prevState => [...prevState, message]);
+      debugger;
+      console.log("message", message);
+      setRecvMessages(prevState => GiftedChat.append(prevState, message));
     });
   }, []);
 
-  const sendMessage = () => {
-    socket.current.emit("message", messageToSend);
-    setMessageToSend("");
+  const onSend = messages => {
+    console.log(messages);
+    socket.current.emit("message", messages[0].text);
+    setRecvMessages(prevState => GiftedChat.append(prevState, messages));
   };
 
-  const textOfRecvMessages = recvMessages.map(msg => (
-    <Text key={msg}>{msg}</Text>
-  ));
-
   return (
-    <View style={styles.container}>
-      {textOfRecvMessages}
-      <TextInput
-        value={messageToSend}
-        onChangeText={text => setMessageToSend(text)}
-        placeholder="Enter chat messsage.."
-        onSubmitEditing={sendMessage}
+    <View style={{ flex: 1 }}>
+      <GiftedChat
+        messages={recvMessages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: 1
+        }}
       />
+      {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
