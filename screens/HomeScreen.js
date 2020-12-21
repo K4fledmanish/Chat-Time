@@ -12,34 +12,37 @@ import io from "socket.io-client";
 
 
 export default function HomeScreen() {
- 
-
   // Using useState to save the user input using REACH HOOK useState
-    const [messageToSend, setMessageToSend] = useState("");
-    const socket = useRef(null);
+  const [messageToSend, setMessageToSend] = useState("");
+  const [recvMessages, setRecvMessages] = useState([]);
+  const socket = useRef(null);
 
 // USING useEFFECT hook
   useEffect(() => {
     socket.current = io("http://172.20.10.2:3001")
-    
-  },[]);
+    socket.current.on("message", message => {
+      setRecvMessages(prevState => [...prevState, message]);
+    });
+  }, []);
 
   const sendMessage = () => {
     socket.current.emit("message", messageToSend);
     setMessageToSend("");
+  };
 
-  }
+  const textOfRecvMessages = recvMessages.map(msg => (
+    <Text key={msg}>{msg}</Text>
+  ));
 
   return (
     <View style={styles.container}>
-      <Text>This is React Native ! Test 8</Text>
-      <TextInput 
-      value = {messageToSend} 
-      onChangeText={text => setMessageToSend(text)} 
-      placeholder="Enter chat message.." 
-      onSubmitEditing={sendMessage}
+      {textOfRecvMessages}
+      <TextInput
+        value={messageToSend}
+        onChangeText={text => setMessageToSend(text)}
+        placeholder="Enter chat messsage.."
+        onSubmitEditing={sendMessage}
       />
-      <StatusBar style="auto" />
     </View>
   );
 }
