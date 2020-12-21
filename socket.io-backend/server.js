@@ -1,18 +1,14 @@
-//const { Socket } = require("socket.io-client");
-const io = require('http').createServer();
-
-//onst io = require("socket.io")();
+const io = require("socket.io")();
 
 io.on("connection", socket => {
-  console.log("A User is connected !");
-  socket.on("message", messgae => {
-    console.log(messgae);
-  })
+  console.log("a user connected!");
+  socket.on("message", message => {
+    console.log(message);
+    io.emit("message", message);
+  });
 });
 
- io.listen(3000);
-
-
+io.listen(3001);
 
 
 // // const io = require("socket.io")();

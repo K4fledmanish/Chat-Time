@@ -2,11 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React,  { useEffect , useState , useRef } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 //import { useEffect } from 'react';
-window.navigator.userAgent = 'react-native';
-let io = require('socket.io-client/socket.io');
-// var io = require("socket.io-client/socket.io");
+import io from "socket.io-client";
 
-//import io from "socket.io-client";
+//io = require('socket.io-client/socket.io');
+//window.navigator.userAgent = 'react-native';
+// var io = require("socket.io-client/socket.io");
+//import io from 'socket.io-client/socket.io';
+
 
 
 export default function HomeScreen() {
@@ -18,7 +20,7 @@ export default function HomeScreen() {
 
 // USING useEFFECT hook
   useEffect(() => {
-    socket.current = io("http://172.20.10.2:3000")
+    socket.current = io("http://172.20.10.2:3001")
     
   },[]);
 
