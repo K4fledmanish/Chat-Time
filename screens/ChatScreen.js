@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Platform, KeyboardAvoidingView } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
-import { Header } from "react-navigation-stack";
+import { Header, HeaderHeightContext } from "react-navigation-stack";
 import { useDispatch, useSelector } from "react-redux";
 
 ChatScreen.navigationOptions = screenProps => ({
@@ -34,12 +34,12 @@ export default function ChatScreen({ navigation }) {
           _id: selfUser.userId
         }}
       />
-      {Platform.OS === "android" && (
+      {/* {Platform.OS === "android" && (
         <KeyboardAvoidingView
           behavior="padding"
-          keyboardVerticalOffset={Header.HEIGHT + 20}
+          keyboardVerticalOffset={HeaderHeightContext}
         />
-      )}
+      )} */}
     </View>
   );
 }
