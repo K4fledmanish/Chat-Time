@@ -36,6 +36,7 @@ io.on("connection", socket => {
         });
         socket.emit("action", { type: "self_user", data: users[socket.id] });
         break;
+
       case "server/private_message":
         const conversationId = action.data.conversationId;
         const from = users[socket.id].userId;
@@ -44,7 +45,7 @@ io.on("connection", socket => {
         for (let i = 0; i < userValues.length; i++) {
           if (userValues[i].userId === conversationId) {
             const socketId = socketIds[i];
-            io.sockets.sockets[socketId].emit("action", {
+            io.sockets.to(socketId).emit("action", {
               type: "private_message",
               data: {
                 ...action.data,
