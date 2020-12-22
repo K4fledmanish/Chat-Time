@@ -34,12 +34,12 @@ export default function ChatScreen({ navigation }) {
           _id: selfUser.userId
         }}
       />
-      {/* {Platform.OS === "android" && (
+      {Platform.OS === "android" && (
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={Header.HEIGHT + 20}
         />
-      )} */}
+      )}
     </View>
   );
 }

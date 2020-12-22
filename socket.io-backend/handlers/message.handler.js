@@ -19,6 +19,7 @@ function handleMessage(socket, users) {
     const message = createMessage(user, messageText);
     console.log(message);
     socket.broadcast.emit("message", message);
+    console.log(message);
   });
 }
 
