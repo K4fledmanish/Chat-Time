@@ -10,7 +10,7 @@ import io from "socket.io-client";
 import React from "react";
 import AppContainer from "./AppContainer";
 
-const socket = io("http://10.0.0.1:3001");
+const socket = io("http://172.20.10.2:3001");
 
 const socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
